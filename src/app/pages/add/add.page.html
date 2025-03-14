@@ -1,0 +1,51 @@
+<ion-content>
+
+  <div class="container">
+
+
+    <div class="heading">
+      <img src="../../../assets/imgs/app_icons/Arrow - back.png" alt="">
+      <h3>Add new task</h3>
+    </div>
+
+    <div class="add-img ion-activitable">
+      <img src="../../../assets/imgs/app_icons/add_img.png" alt="add-new-image">
+      <p>Add Img</p>
+      <ion-ripple-effect></ion-ripple-effect>
+    </div>
+
+    <form>
+
+      <ion-label>Task title</ion-label>
+      <ion-input placeholder="Enter title here..."></ion-input>
+
+      <ion-label>Enter Description</ion-label>
+      <ion-input placeholder="Enter description here..."></ion-input>
+
+      <ion-label>Priority</ion-label>
+      <ion-select interface="action-sheet" toggleIcon="" [value]="priorities[1]">
+
+        <ion-icon name="flag-outline" slot="start" aria-hidden="true"></ion-icon>
+        @for (priority of priorities; track $index) {
+        <ion-select-option [value]="priority">{{priority}} Priority</ion-select-option>
+        }
+
+      </ion-select>
+
+      <ion-label>Due date</ion-label>
+      <div class="input date">
+        <p>{{false||"choose due date..."}}</p>
+        <input type="date">
+        <img src="../../../assets/imgs/app_icons/calendar.png" alt="Due date">
+      </div>
+
+    </form>
+
+    <button class="ion-activatable auth">
+      <p>Add task</p>
+      <ion-ripple-effect></ion-ripple-effect>
+    </button>
+
+  </div>
+
+</ion-content>

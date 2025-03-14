@@ -1,0 +1,65 @@
+@import "../../../global.scss";
+@import "../../../theme/mixins.scss";
+
+
+
+.add-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #{$mainColor};
+  gap: 8px;
+  border: 1px dotted #{$mainColor};
+  border-radius: #{$mainBorderRadius};
+  padding: 12px;
+  margin: 10px 0 16px;
+}
+
+form {
+  display: block;
+  flex-flow: column;
+  gap: 16px;
+
+  input,
+  ion-input,
+  ion-select,
+  .input {
+    margin-top: 8px;
+  }
+
+  .date {
+    display: flex;
+    color: #{$txtColor};
+    justify-content: space-between;
+
+    input {
+      display: none;
+    }
+  }
+
+  ion-select {
+    display: flex;
+    justify-content: space-between;
+    background-color:#{ $secondColor};
+    color: #{$mainColor};
+    text-transform: capitalize;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    position: relative;
+
+    &::after {
+      content: '';
+      background-image: url('../../../assets/imgs/app_icons/Arrow\ -\ Down\ 4.png');
+      @include shape(24px, 24px);
+    }
+
+    ion-icon {
+      margin-right: 10px;
+      @include shape(24px, 24px);
+    }
+  }
+
+
+
+}

@@ -1,0 +1,86 @@
+@import "../../../theme/mixins.scss";
+@import "../../../global.scss";
+
+.heading {
+  ion-icon {
+    display: block;
+    margin-left: auto;
+  }
+}
+
+.txts {
+
+  display: flex;
+  flex-flow: column;
+  gap: 8px;
+  margin-bottom: 16px;
+
+  h3 {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 24px;
+    color: #{$paragraphColor};
+  }
+}
+
+.data {
+  display: flex;
+  flex-flow: column;
+  gap: 8px;
+
+  >div {
+    background-color: #{$secondColor};
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 10px 20px 24px;
+    border-radius: #{$mainBorderRadius};
+    height: 50px;
+
+    >p {
+      color: #{$mainColor};
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 24px;
+    }
+  }
+
+  >div:first-of-type {
+    >div {
+      display: flex;
+      flex-flow: column;
+      gap: 4px;
+      justify-content: center;
+
+      span {
+        font-size: 9px;
+        color: #{$txtColor};
+      }
+
+      p {
+        font-size: 14px;
+        line-height: 24px;
+      }
+    }
+
+  }
+
+  >div:last-of-type {
+    p {
+      margin-right: auto;
+    }
+
+    ion-icon {
+      --ion-color-primary:#{$mainColor};
+      @include shape(24px,24px);
+    }
+
+  }
+}

@@ -1,0 +1,58 @@
+<ion-content>
+
+  <div class="container">
+
+
+    <div class="heading">
+      <img src="../../../assets/imgs/app_icons/Arrow - back.png" alt="">
+      <h3>Task Details</h3>
+      <ion-icon name="ellipsis-vertical" slot="end" color="dark"></ion-icon>
+    </div>
+
+    <div><img src="../../../assets/imgs/default.png" alt=""></div>
+
+    <div class="txts">
+
+      <h3>{{task?.title||"Grocery Shopping App"}}</h3>
+
+      <p>{{task?.desc|| `This application is designed for super shops. By using
+                        this application they can enlist all their products in one
+                        place and can deliver. Customers will get a one-stop
+                        solution for their daily shopping`}}
+      </p>
+
+    </div>
+
+    <div class="data">
+
+      <div>
+        <div>
+          <span>End Date</span>
+          <p>{{(task?.createdAt|date:'dd MMMM , yyyy') ||"30 June, 2022"}}</p>
+        </div>
+        <img src="../../../assets/imgs/app_icons/calendar.png" alt="">
+      </div>
+
+
+      <div>
+        <p>{{task?.status || "InProgress"}}</p>
+        <img src="../../../assets/imgs/app_icons/Arrow - Down 4.png" alt="">
+      </div>
+
+
+      <div>
+        <ion-icon name="flag-outline" color="primary"></ion-icon>
+        <p>{{task?.priority || "Medium"}} priority</p>
+        <img src="../../../assets/imgs/app_icons/Arrow - Down 4.png" alt="">
+      </div>
+    </div>
+
+
+    <img src="../../../assets/imgs/QC.png" alt="">
+
+
+
+
+  </div>
+
+</ion-content>

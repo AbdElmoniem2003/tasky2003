@@ -1,0 +1,185 @@
+@import "../../../theme/mixins.scss";
+@import "../../../global.scss";
+
+.heading {
+  align-items: center;
+  justify-content: space-between;
+
+  ion-buttons {
+    ion-button>img {
+      @include shape(24px, 24px)
+    }
+  }
+}
+
+.filters {
+  section {
+    color: #{$paragraphColor};
+    margin: 16px 0;
+  }
+
+  .spans {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+
+    span {
+      border-radius: 2 * $mainBorderRadius;
+      background-color: #{$secondColor};
+      color: #{$ipColor};
+      padding: 8px 12px;
+      text-transform: capitalize;
+      height: 36px;
+    }
+
+    span.all {
+      width: 44px;
+    }
+
+    span.waiting {
+      width: 81px;
+    }
+
+    span.finished {
+      width: 88px;
+    }
+
+    span.active {
+      background-color: #{$mainColor};
+      color: var(--ion-color-light);
+    }
+  }
+}
+
+.tasks-holder {
+  padding-top: 16px;
+  display: flex;
+  flex-flow: column nowrap;
+
+  .task {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    align-items: center;
+    height: 96px;
+
+    img {
+      @include shape(64px, 64px);
+      border-radius: 50%;
+    }
+
+
+    .task-data {
+      display: flex;
+      flex-flow: column;
+      justify-content: space-around;
+      @include shape(219px, 72px);
+
+      >div {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      >div:first-of-type {
+        p {
+          font-size: 16px;
+          line-height: 24px;
+          font-weight: 700;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+
+        // Statuses
+        span {
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 18px;
+          padding: 2px 6px;
+          border-radius: 5px;
+        }
+
+        span[title='waiting'] {
+          background-color: $waitingBG ;
+          color: $waitingColor;
+        }
+
+        span[title='finished'] {
+          background-color: $finishedBG ;
+          color: $finishedColor;
+        }
+
+        span[title='inprogress'] {
+          background-color: $inprogressBG;
+          color: $inprogressColor
+        }
+      }
+
+      >p {
+        height: 24px;
+        font-size: 14px;
+        line-height: 24px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      >div:last-of-type {
+        >div {
+          display: flex;
+          gap: 4px;
+
+          ion-icon {
+            @include shape(16px, 16px);
+          }
+
+          // priorities
+          &[title='low'] {
+            p {
+              color: $finishedColor;
+            }
+
+            ion-icon {
+              --ion-color-primary:#{$finishedColor};
+            }
+          }
+
+          &[title='midium'] {
+            p {
+              color: $inprogressColor;
+            }
+
+            ion-icon {
+              --ion-color-primary:#{$inprogressColor};
+            }
+          }
+
+          &[title='high'] {
+            p {
+              color: $waitingColor;
+            }
+
+            ion-icon {
+              --ion-color-primary:#{$waitingColor};
+            }
+          }
+        }
+
+        p {
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 18px;
+          color:#{$paragraphColor};
+          text-transform: capitalize;
+        }
+
+
+      }
+    }
+
+    ion-icon {
+      align-self: flex-start;
+      @include shape(24px, 24px);
+    }
+  }
+}
