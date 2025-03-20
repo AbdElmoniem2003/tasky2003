@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { CountryComponent } from './pages/country/country.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,10 @@ const routes: Routes = [
     path: 'tasks',
     loadChildren: () => import('./pages/tasks/tasks.module').then(m => m.TasksPageModule)
   },
+  {
+    path: 'country-component',
+    component: CountryComponent
+  }
 ];
 
 @NgModule({

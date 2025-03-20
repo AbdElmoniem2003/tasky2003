@@ -67,6 +67,10 @@ $finishedBG: rgba(227, 242, 255, 1);
 $inprogressColor: $mainColor;
 $inprogressBG: $secondColor;
 
+$profileTxt: rgba(47, 47, 47, 0.4);
+$profileHeading: rgba(47, 47, 47, 0.6);
+$profileBg: rgba(245, 245, 245);
+
 
 
 
@@ -78,6 +82,10 @@ $inprogressBG: $secondColor;
   padding: 0;
   box-sizing: border-box;
   font-family: sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 .container {
@@ -93,6 +101,9 @@ $inprogressBG: $secondColor;
   }
 
 }
+
+
+
 
 .heading {
   display: flex;
@@ -148,6 +159,28 @@ form>input {
   align-items: center;
   margin-bottom: 16px;
 }
+
+span.invalid {
+  font-size: 10px;
+  width: 100%;
+  display: block;
+  color: orange;
+  text-shadow: 1px 1px 1px steelblue;
+  text-align: center;
+  line-height: 20px;
+  letter-spacing: 1.5px;
+}
+
+.show-loading{
+  z-index: 500;
+  position: fixed;
+  transform: translateY(-50%);
+  top: 50%;
+  background: linear-gradient(-90deg, #0000007a, transparent, #0000007a, transparent, #0000007a);
+  display: block;
+  box-shadow: 0px 0px 100px 200px #0000007a;
+}
+
 
 .input {
 

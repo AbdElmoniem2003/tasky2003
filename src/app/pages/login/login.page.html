@@ -4,31 +4,44 @@
     <img src="../../../assets/imgs/app_img.svg" alt="">
 
     <h3>Login</h3>
-    <form>
+    <form [formGroup]="loginForm">
+
+      @if(loginForm.get('phone').hasError('invalidPhoneNumber')&& loginForm.get('phone').touched){
+      <span class="invalid"> Phone Number is not vaild to your country  {{country.countryNameEn}}</span>
+      }
+      @if(loginForm.get('phone').hasError('required')&& loginForm.get('phone').touched){
+      <span class="invalid"> Phone Number is required</span>
+      }
       <div class="input">
-        <div class="country">
+        <div class="country" (click)="pickCountry()">
           <img src="https://flagsapi.com/{{country.countryCode.toUpperCase()}}/flat/64.png" alt="">
           <span> +{{country.countryCallingCode}}</span>
           <ion-icon color="primary" name="chevron-down-outline"></ion-icon>
         </div>
-        <ion-input class="inner-input" type="text" placeholder="123 456-7890">
+
+        <ion-input formControlName="phone" class="inner-input" type="text" placeholder="123 456-7890">
         </ion-input>
       </div>
 
-      <ion-input [type]="displayPassword?'text':'password'" placeholder="Password...">
+      @if(loginForm.get('password').hasError('required')&& loginForm.get('password').touched){
+      <span class="invalid"> Password is required of 6 characters at least</span>
+      }
+
+      <ion-input formControlName="password" (key.enter)="login()" [type]="displayPassword?'text':'password'"
+        placeholder="Password...">
 
         <ion-icon slot='end' color="primary" (click)="displayPassword=!displayPassword"
           [name]="!displayPassword?'eye-outline':'eye-off-outline'"></ion-icon>
       </ion-input>
     </form>
 
-    <button class="ion-activatable auth">
+    <button (click)="login()" [disabled]="loginForm?.invalid" class="ion-activatable auth">
       <p>Sign In</p>
       <ion-ripple-effect></ion-ripple-effect>
     </button>
 
     <footer>
-      <p>Didn’t have any account? <span>Sign Up here</span></p>
+      <p>Didn’t have any account? <span (click)="toRegister()">Sign Up here</span></p>
     </footer>
   </div>
 

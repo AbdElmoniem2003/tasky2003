@@ -1,3 +1,18 @@
-<p>
-  country works!
-</p>
+<div class="list">
+
+  <input [(ngModel)]="countryFilter" (input)="filter()" type="text">
+
+  @for(country of countries ;track $index){
+  <div class="country" (click)="dismissCountry(country)">
+    <img src="https://flagcdn.com/32x24/{{country.countryCode.toLowerCase()}}.png" [alt]="country.countryNameEn">
+    <span>{{country.countryNameLocal}}</span>
+    <span>{{country.countryCallingCode}}</span>
+  </div>
+  }
+  @if(!countries.length){
+  <div class="no-country">
+    No Countries Available
+  </div>
+  }
+
+</div>

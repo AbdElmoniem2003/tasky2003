@@ -1,16 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-start',
   templateUrl: './start.page.html',
-  styleUrls: ['./start.page.scss'],  standalone: false
+  styleUrls: ['./start.page.scss'], standalone: false
 
 })
 export class StartPage implements OnInit {
 
-  constructor() { }
+  constructor(private navCtrl: NavController) { }
 
   ngOnInit() {
+  }
+
+  start() {
+    this.navCtrl.navigateForward('/login')
   }
 
 }

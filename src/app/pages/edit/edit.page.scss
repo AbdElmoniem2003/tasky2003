@@ -9,8 +9,22 @@
   gap: 8px;
   border: 1px dotted #{$mainColor};
   border-radius: #{$mainBorderRadius};
-  padding: 12px;
   margin: 24px 0 16px;
+  position: relative;
+  overflow: hidden;
+
+  >p {
+    padding: 12px 0;
+  }
+
+  ion-icon{
+    position: absolute;
+    font-size: 35px;
+    box-shadow: inset 7px -7px 10px 0px white;
+    bottom: 5%;
+    right: 5%;
+    border-radius: 5px;
+  }
 }
 
 form {
@@ -56,8 +70,15 @@ form {
       margin-right: 10px;
       @include shape(24px, 24px);
     }
+
   }
+}
 
+button.auth {
+  font-size: 16px;
+  margin-bottom: 24px;
 
-
+  &:disabled {
+    opacity: 0.6;
+  }
 }

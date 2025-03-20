@@ -7,33 +7,52 @@
 
 
 
-    <form>
+    <form [formGroup]="registerForm">
 
-      <ion-input placeholder="Name..."></ion-input>
+      @if(registerForm.get('displayName').hasError('required')&& registerForm.get('displayName').touched){
+      <span class="invalid"> Name is required</span>
+      }
+      <ion-input formControlName="displayName" placeholder="Name..."></ion-input>
 
+      @if(registerForm.get('phone').hasError('invalidPhoneNumber')&& registerForm.get('phone').touched){
+      <span class="invalid"> Phone Number is not vaild to your country {{country.countryNameEn}}</span>
+      }
+      @if(registerForm.get('phone').hasError('required')&& registerForm.get('phone').touched){
+      <span class="invalid"> Phone Number is required</span>
+      }
       <div class="input">
-        <div class="country">
+        <div class="country" (click)="pickCountry()">
           <img src="https://flagsapi.com/{{country.countryCode.toUpperCase()}}/flat/64.png" alt="">
           <span> +{{country.countryCallingCode}}</span>
           <ion-icon color="primary" name="chevron-down-outline"></ion-icon>
         </div>
-        <ion-input class="inner-input" type="text" placeholder="123 456-7890">
+        <ion-input formControlName="phone" class="inner-input" type="text" placeholder="123 456-7890">
         </ion-input>
       </div>
 
+      @if(registerForm.get('experienceYears').hasError('required')&& registerForm.get('experienceYears').touched){
+      <span class="invalid"> Experience Years is required</span>
+      }
+      <ion-input formControlName="experienceYears" placeholder="Years of experience..."></ion-input>
 
-
-      <ion-input placeholder="Years of experience..."></ion-input>
-
-      <ion-select label="Choose experience Level" interface="action-sheet" moed='ios' toggleIcon="chevron-down">
+      @if(registerForm.get('level').hasError('required')&& registerForm.get('level').touched){
+      <span class="invalid"> Level is required</span>
+      }
+      <ion-select formControlName="level" label="Choose experience Level" interface="action-sheet" moed='ios'
+        toggleIcon="chevron-down">
         <ion-select-option value="junior">Junior</ion-select-option>
         <ion-select-option value="senior">Senior</ion-select-option>
       </ion-select>
 
+      @if(registerForm.get('address').hasError('required')&& registerForm.get('address').touched){
+      <span class="invalid"> Address is required</span>
+      }
+      <ion-input formControlName="address" placeholder="Address..."></ion-input>
 
-      <ion-input placeholder="Address..."></ion-input>
-
-      <ion-input [type]="displayPassword?'text':'password'" placeholder="Password...">
+      @if(registerForm.get('password').hasError('required')&& registerForm.get('password').touched){
+      <span class="invalid"> Password is required of 6 characters at least</span>
+      }
+      <ion-input formControlName="password" [type]="displayPassword?'text':'password'" placeholder="Password...">
 
         <ion-icon slot='end' color="primary" (click)="displayPassword=!displayPassword"
           [name]="!displayPassword?'eye-outline':'eye-off-outline'"></ion-icon>
@@ -42,13 +61,13 @@
     </form>
 
 
-    <button class="ion-activatable auth">
+    <button class="ion-activatable auth" [disabled]="!registerForm?.valid">
       <p>Sign up</p>
       <ion-ripple-effect></ion-ripple-effect>
     </button>
 
     <footer>
-      <p>Didn’t have any account? <span>Sign Up here</span></p>
+      <p>Didn’t have any account? <span (click)="toLogin()">Sign Up here</span></p>
     </footer>
   </div>
 </ion-content>

@@ -1,7 +1,5 @@
 {
-  "name": "tasky",
-  "integrations": {
-    "capacitor": {}
-  },
+  "name": "Tasky",
+  "integrations": {},
   "type": "angular"
 }

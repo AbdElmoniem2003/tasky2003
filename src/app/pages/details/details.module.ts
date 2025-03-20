@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { DetailsPageRoutingModule } from './details-routing.module';
 
 import { DetailsPage } from './details.page';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DetailsPageRoutingModule
+    DetailsPageRoutingModule,
+    LazyLoadImageModule
   ],
   declarations: [DetailsPage]
 })
-export class DetailsPageModule {}
+export class DetailsPageModule { }

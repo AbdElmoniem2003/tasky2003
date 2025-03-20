@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
+import { LazyLoadImageModule } from "ng-lazyload-image"
 
 import { TasksPageRoutingModule } from './tasks-routing.module';
 
@@ -13,8 +14,9 @@ import { TasksPage } from './tasks.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    TasksPageRoutingModule
+    TasksPageRoutingModule,
+    LazyLoadImageModule
   ],
   declarations: [TasksPage]
 })
-export class TasksPageModule {}
+export class TasksPageModule { }

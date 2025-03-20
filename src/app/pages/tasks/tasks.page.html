@@ -1,13 +1,19 @@
 <ion-content>
 
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content refreshingSpinner="dots">
+    </ion-refresher-content>
+  </ion-refresher>
+
+
   <div class="container">
 
 
     <div class="heading">
       <h3>Logo</h3>
       <ion-buttons slot='end'>
-        <ion-button><img src="../../../assets/imgs/app_icons/person.png" alt=""></ion-button>
-        <ion-button><img src="../../../assets/imgs/app_icons/logout.png" alt=""></ion-button>
+        <ion-button (click)="toProfile()"><img src="../../../assets/imgs/app_icons/person.png" alt=""></ion-button>
+        <ion-button (click)="logout()"><img src="../../../assets/imgs/app_icons/logout.png" alt=""></ion-button>
       </ion-buttons>
     </div>
 
@@ -15,35 +21,40 @@
       <section>My Tasks</section>
       <div class="spans">
         @for (status of statuses; track $index) {
-        <span [ngClass]="status==='all'?'active '+ status : status">{{status}}</span>
+        <span (click)="filterByStatus(status)" class="ion-activatable"
+          [ngClass]="status===filterTxt?'active '+ status : status">
+          {{status}}
+          <ion-ripple-effect></ion-ripple-effect>
+        </span>
         }
       </div>
     </div>
 
 
+    @if (tasks && !isLoading && !empty) {
     <div class="tasks-holder">
 
-      @for (i of [1,2,3,4]; track $index) {
+      @for (task of tasks; track $index) {
 
-      <div class="task">
-        <img [src]="tasks[0].image" alt="No Image">
+      <div class="task" (click)="toDetails(task)">
+        <img [lazyLoad]="task.image" [defaultImage]="alternateImg" alt="No Image">
 
         <div class="task-data">
 
           <div>
-            <p>{{tasks[0].title}}</p>
-            <span [title]="tasks[0].status">{{tasks[0].status}}</span>
+            <p>{{task.title}}</p>
+            <span [title]="task.status">{{task.status}}</span>
           </div>
 
-          <p>{{tasks[0].desc}}</p>
+          <p>{{task.desc}}</p>
 
           <div>
-            <div [title]="tasks[0].priority">
+            <div [title]="task.priority">
               <ion-icon name="flag-outline" color="primary"></ion-icon>
-              <p>{{tasks[0].priority}}</p>
+              <p>{{task.priority}}</p>
             </div>
 
-            <p>{{tasks[0].updatedAt | date:'dd/MM/yyyy'}}</p>
+            <p>{{task.updatedAt | date:'dd/MM/yyyy'}}</p>
           </div>
 
         </div>
@@ -54,10 +65,40 @@
       }
 
     </div>
+    }
 
+    @if(isLoading){
+    <div class="loading">
+      <img src="../../../assets/imgs/transparent_loading.gif" alt="">
+      <h3 class="load">Loading</h3>
+    </div>
+    }
 
+    @if(empty ||tasks?.length==0){
+    <div class="empty">
+      <img src="../../../assets/imgs/transparent_loading.gif" alt="">
+      <h3>No Tasks To View</h3>
+    </div>
+    }
 
+    @if(isError){
+    <div class="error">
+      <h3>An Error Has Occured Do Check Your Enternet Connection And Retry Again </h3>
+    </div>
+    }
 
   </div>
+  <ion-buttons>
+    <button color="primary">
+      <img src="../../../assets/imgs/app_icons/qr_small.png">
+      <ion-ripple-effect></ion-ripple-effect>
+    </button>
+    <ion-fab-button (click)="addTask()" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-buttons>
+
+
+
 
 </ion-content>

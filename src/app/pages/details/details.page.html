@@ -2,23 +2,33 @@
 
   <div class="container">
 
-
     <div class="heading">
-      <img src="../../../assets/imgs/app_icons/Arrow - back.png" alt="">
+      <ion-buttons>
+        <ion-button (click)="back()">
+          <img src="../../../assets/imgs/app_icons/Arrow - back.png" alt="">
+        </ion-button>
+      </ion-buttons>
       <h3>Task Details</h3>
-      <ion-icon name="ellipsis-vertical" slot="end" color="dark"></ion-icon>
+      <ion-icon (click)="this.showEdits=!this.showEdits" name="ellipsis-vertical" slot="end" color="dark"></ion-icon>
+
+      @if (showEdits) {
+      <div class="edits">
+        <button (click)="toEdits()" class="ion-activatable"> Edit <ion-ripple-effect></ion-ripple-effect></button>
+        <button (click)="shareTask()" class="ion-activatable">Share <ion-ripple-effect></ion-ripple-effect></button>
+        <button (click)="null" class="ion-activatable">Print <ion-ripple-effect></ion-ripple-effect></button>
+        <button (click)="deleteTask()" class="ion-activatable">Delete <ion-ripple-effect></ion-ripple-effect></button>
+      </div>
+      }
+
     </div>
 
-    <div><img src="../../../assets/imgs/default.png" alt=""></div>
+    <div class="task-img"><img [lazyLoad]="task.image" [defaultImage]="alternativeImg" alt=""></div>
 
     <div class="txts">
 
-      <h3>{{task?.title||"Grocery Shopping App"}}</h3>
+      <h3>{{task?.title}}</h3>
 
-      <p>{{task?.desc|| `This application is designed for super shops. By using
-                        this application they can enlist all their products in one
-                        place and can deliver. Customers will get a one-stop
-                        solution for their daily shopping`}}
+      <p>{{task?.desc}}
       </p>
 
     </div>
@@ -35,14 +45,14 @@
 
 
       <div>
-        <p>{{task?.status || "InProgress"}}</p>
+        <p>{{task?.status}}</p>
         <img src="../../../assets/imgs/app_icons/Arrow - Down 4.png" alt="">
       </div>
 
 
       <div>
         <ion-icon name="flag-outline" color="primary"></ion-icon>
-        <p>{{task?.priority || "Medium"}} priority</p>
+        <p>{{task?.priority}} priority</p>
         <img src="../../../assets/imgs/app_icons/Arrow - Down 4.png" alt="">
       </div>
     </div>

@@ -1,5 +1,5 @@
 export enum EndPointsEnum {
-  TODOS = 'todos',
+  TODOS = 'todos?page=',
   UPLOAD = 'upload/image',
   LOGIN = 'auth/login',
   LOGOUT = 'auth/logout',
@@ -8,5 +8,11 @@ export enum EndPointsEnum {
   REFRESH_TOKEN = 'auth/refresh-token?token=',
   DELETE = 'todos/',
   GET_ONE = 'todos/',
-}
+  CREATE = "todos",
+  EDIT='todos/',
 
+  /* for Local Storage and Filesystem*/
+  ACCESS = 'access_token',
+  REFRESH = 'refresh_token',
+  STORED_IMAGES = 'stored_images'
+}

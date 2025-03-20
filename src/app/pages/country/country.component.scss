@@ -1,0 +1,47 @@
+@import "../../../theme/mixins.scss";
+@import "../../../global.scss";
+
+
+.list {
+  padding: 20px 10px;
+
+  input{
+    @include shape(100%,30px);
+    border-radius: 5px;
+    color: #{$mainColor};
+    outline: none;
+  }
+
+  .country {
+    display: flex;
+    gap: 20px;
+    padding: 10px;
+    background-color: #{$waitingColor};
+    height: 40px;
+    border-bottom: 1px solid dodgerblue;
+    color: var(--ion-color-light);
+
+    >span:first-of-type {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      flex-grow: 1;
+    }
+
+    >span:last-child {
+    }
+
+  }
+  .no-country{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 25px;
+    font-weight: 900;
+    line-height: 40px;
+    width: 100%;
+    text-align: center;
+    text-shadow: 2px 2px 2px dodgerblue;
+  }
+}

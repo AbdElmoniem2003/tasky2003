@@ -4,31 +4,27 @@
 
 
     <div class="heading">
-      <img src="../../../assets/imgs/app_icons/Arrow - back.png" alt="">
+      <ion-buttons>
+        <ion-button (click)="back()"><img src="../../../assets/imgs/app_icons/Arrow - back.png" alt=""></ion-button>
+      </ion-buttons>
       <h3>Edit task</h3>
     </div>
 
     <div class="add-img ion-activitable">
-      <!-- @if (!taskToEdit.image) {
-      <img src="../../../assets/imgs/app_icons/add_img.png" alt="add-new-image">
-      <p>Add Img</p>
-      <ion-ripple-effect></ion-ripple-effect>
-      }
-      @if (taskToEdit.image) {
-      <img src="../../../assets/imgs/default.png" alt="">
-      } -->
+      <img [lazyLoad]="image" [defaultImage]="alternativeImg" alt="">
+      <ion-icon (click)="updateImg()" name="create-outline" color='primary' slot="end"></ion-icon>
     </div>
 
-    <form>
+    <form [formGroup]="editForm">
 
       <ion-label>Task title</ion-label>
-      <ion-input placeholder="Enter title here..."></ion-input>
+      <ion-input formControlName="title" placeholder="Enter title here..."></ion-input>
 
       <ion-label>Enter Description</ion-label>
-      <ion-input placeholder="Enter description here..."></ion-input>
+      <ion-input formControlName="desc" placeholder="Enter description here..."></ion-input>
 
       <ion-label>Priority</ion-label>
-      <ion-select interface="action-sheet" toggleIcon="" [value]="priorities[1]">
+      <ion-select formControlName="priority" interface="action-sheet" toggleIcon="">
 
         <ion-icon name="flag-outline" slot="start" aria-hidden="true"></ion-icon>
         @for (priority of priorities; track $index) {
@@ -37,17 +33,27 @@
 
       </ion-select>
 
+      <ion-label>Status</ion-label>
+      <ion-select formControlName="status" interface="action-sheet" toggleIcon="">
+
+        <ion-icon name="flag-outline" slot="start" aria-hidden="true"></ion-icon>
+        @for (status of statuses; track $index) {
+        <ion-select-option [value]="status">{{status}}</ion-select-option>
+        }
+
+      </ion-select>
+
       <ion-label>Due date</ion-label>
-      <div class="input date">
-        <p>{{false||"choose due date..."}}</p>
-        <input type="date">
+      <div (click)="pickDate()" class="input date">
+        <p>{{(editForm.get('dueDate').value|date:'dd/MM/yyyy')||"choose due date..."}}</p>
+        <input formControlName="dueDate" type="date" class="pick-date">
         <img src="../../../assets/imgs/app_icons/calendar.png" alt="Due date">
       </div>
 
     </form>
 
-    <button class="ion-activatable auth">
-      <p>Add task</p>
+    <button (click)="updateTask()" class="ion-activatable auth" [disabled]="editForm.invalid">
+      <p>Update task</p>
       <ion-ripple-effect></ion-ripple-effect>
     </button>
 

@@ -23,6 +23,26 @@
           "input[type=date]"
         ]
       }
+    ],
+    "compat-api/css": [
+      "default",
+      {
+        "ignore": [
+          "scroll-behavior"
+        ]
+      }
+    ],
+    "axe/structure": [
+      "default",
+      {
+        "list": "off"
+      }
+    ],
+    "axe/text-alternatives": [
+      "default",
+      {
+        "image-alt": "off"
+      }
     ]
   }
 }
