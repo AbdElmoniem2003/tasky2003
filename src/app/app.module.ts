@@ -20,7 +20,7 @@ import { IonicStorageModule } from "@ionic/storage-angular"
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    IonicStorageModule.forRoot({ name: "Tasky2003" })
+    IonicStorageModule.forRoot({ name: "Tasky2003" }),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

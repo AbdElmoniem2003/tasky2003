@@ -58,7 +58,11 @@
     </div>
 
 
-    <img src="../../../assets/imgs/QC.png" alt="">
+    <!-- <img src="../../../assets/imgs/QC.png" alt=""> -->
+
+    <qrcode [qrdata]="getQrCodeData()" [width]="375" [title]="'From Abdelmoniem'" colorLight="red"
+      [errorCorrectionLevel]="'M'">
+    </qrcode>
 
 
 

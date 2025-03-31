@@ -86,23 +86,23 @@ export class DataService {
 
   async storeAddedOne(task: TaskRes) {
     // return new Promise<TaskRes[]>(async (resolve, reject) => {
-      task.image = task.image != 'path.png' ? '' : task.image;
-      const storedData = await this.getStoredData();
-      storedData.push(task)
-      // resolve(storedData)
-      this.storeData(storedData)
+    task.image = task.image != 'path.png' ? '' : task.image;
+    const storedData = await this.getStoredData();
+    storedData.push(task)
+    // resolve(storedData)
+    this.storeData(storedData)
     // })
   }
 
   async updateStoredOne(task: TaskRes, id: string) {
     // return new Promise<TaskRes[]>(async (resolve, reject) => {
-      task.image = task.image != 'path.png' ? '' : task.image;
-      const storedData = await this.getStoredData();
-      const toUpdate = storedData.find(t => { return t._id == id })
-      const toUpdateIndex = storedData.indexOf(toUpdate);
-      storedData[toUpdateIndex] = task;
-      // resolve(storedData);
-      this.storeData(storedData)
+    task.image = task.image != 'path.png' ? '' : task.image;
+    const storedData = await this.getStoredData();
+    const toUpdate = storedData.find(t => { return t._id == id })
+    const toUpdateIndex = storedData.indexOf(toUpdate);
+    storedData[toUpdateIndex] = task;
+    // resolve(storedData);
+    this.storeData(storedData)
     // })
   }
 

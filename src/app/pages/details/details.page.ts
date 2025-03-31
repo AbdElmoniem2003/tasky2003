@@ -6,6 +6,7 @@ import { DataService } from 'src/core/Services/data-service/data.service';
 import { FunctionsService } from 'src/core/Services/functions-service/functions.service';
 import { TaskRes } from 'src/core/types/task-res';
 
+
 @Component({
   selector: 'app-details',
   templateUrl: './details.page.html',
@@ -15,6 +16,7 @@ import { TaskRes } from 'src/core/types/task-res';
 export class DetailsPage implements OnInit {
 
   task: TaskRes;
+  qrCodeData: string;
   showEdits: boolean = false;
   alternativeImg: string = '../../../assets/imgs/default.png';
 
@@ -26,7 +28,12 @@ export class DetailsPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.task = this.dataService.getTask()
+    this.task = this.dataService.getTask();
+  }
+
+  getQrCodeData() {
+    const x = { title: this.task.title, desc: this.task.desc, createdAt: new Date(this.task.createdAt).toString() };
+    return this.qrCodeData = JSON.stringify(x)
   }
 
 

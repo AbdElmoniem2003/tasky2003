@@ -37,6 +37,7 @@
     "@capacitor/status-bar": "7.0.0",
     "@ionic/angular": "^8.0.0",
     "@ionic/storage-angular": "^4.0.0",
+    "angularx-qrcode": "^19.0.0",
     "browser-image-resizer": "^2.4.1",
     "country-codes-list": "^2.0.0",
     "google-libphonenumber": "^3.2.40",

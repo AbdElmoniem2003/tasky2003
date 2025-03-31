@@ -9,13 +9,15 @@ import { DetailsPageRoutingModule } from './details-routing.module';
 import { DetailsPage } from './details.page';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 
+import { QRCodeComponent } from "angularx-qrcode"
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     DetailsPageRoutingModule,
-    LazyLoadImageModule
+    LazyLoadImageModule, QRCodeComponent
   ],
   declarations: [DetailsPage]
 })
