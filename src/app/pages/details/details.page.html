@@ -1,24 +1,25 @@
 <ion-content>
 
-  <div class="container">
+  @if (showEdits) {
+  <div [class]="showEdits? 'edits active':'edits'">
+    <button (click)="toEdits()" class="ion-activatable"> Edit <ion-ripple-effect></ion-ripple-effect></button>
+    <button (click)="shareTask()" class="ion-activatable">Share <ion-ripple-effect></ion-ripple-effect></button>
+    <button (click)="printTask()" class="ion-activatable">Print <ion-ripple-effect></ion-ripple-effect></button>
+    <button (click)="deleteTask()" class="ion-activatable">Delete <ion-ripple-effect></ion-ripple-effect></button>
+  </div>
+  <div class="hide-edits" (click)="showEdits=false"></div>
+  }
+
+  <div class="container details" #content>
 
     <div class="heading">
       <ion-buttons>
         <ion-button (click)="back()">
-          <img src="../../../assets/imgs/app_icons/Arrow - back.png" alt="">
+          <img [src]='backArrow' alt="">
         </ion-button>
       </ion-buttons>
       <h3>Task Details</h3>
       <ion-icon (click)="this.showEdits=!this.showEdits" name="ellipsis-vertical" slot="end" color="dark"></ion-icon>
-
-      @if (showEdits) {
-      <div class="edits">
-        <button (click)="toEdits()" class="ion-activatable"> Edit <ion-ripple-effect></ion-ripple-effect></button>
-        <button (click)="shareTask()" class="ion-activatable">Share <ion-ripple-effect></ion-ripple-effect></button>
-        <button (click)="null" class="ion-activatable">Print <ion-ripple-effect></ion-ripple-effect></button>
-        <button (click)="deleteTask()" class="ion-activatable">Delete <ion-ripple-effect></ion-ripple-effect></button>
-      </div>
-      }
 
     </div>
 
@@ -28,8 +29,7 @@
 
       <h3>{{task?.title}}</h3>
 
-      <p>{{task?.desc}}
-      </p>
+      <p>{{task?.desc}}</p>
 
     </div>
 
@@ -40,20 +40,20 @@
           <span>End Date</span>
           <p>{{(task?.createdAt|date:'dd MMMM , yyyy') ||"30 June, 2022"}}</p>
         </div>
-        <img src="../../../assets/imgs/app_icons/calendar.png" alt="">
+        <img [src]="calenderImg" alt="">
       </div>
 
 
       <div>
         <p>{{task?.status}}</p>
-        <img src="../../../assets/imgs/app_icons/Arrow - Down 4.png" alt="">
+        <img [src]="downArrow" alt="">
       </div>
 
 
       <div>
         <ion-icon name="flag-outline" color="primary"></ion-icon>
         <p>{{task?.priority}} priority</p>
-        <img src="../../../assets/imgs/app_icons/Arrow - Down 4.png" alt="">
+        <img [src]="downArrow" alt="">
       </div>
     </div>
 
