@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { CountryData } from 'country-codes-list';
 import countriesData from "country-codes-list/dist/countriesData.js";
 import { AuthService } from 'src/core/Services/auth-service/auth.service';
@@ -29,7 +29,7 @@ export class CountryComponent implements OnInit {
 
   filter() {
     this.countries = this.clonnedCountriesList;
-    const byCallingCode = "+" + this.countryFilter.trim()
+    const byCallingCode = this.countryFilter.trim()
     const byName = this.countryFilter.trim().toLowerCase()
     const byCurrency = this.countryFilter.trim().toLowerCase()
     this.countries = this.countries.filter((country) => {

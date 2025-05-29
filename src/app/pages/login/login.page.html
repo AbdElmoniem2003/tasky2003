@@ -7,13 +7,13 @@
     <form [formGroup]="loginForm">
 
       @if(loginForm.get('phone').hasError('invalidPhoneNumber')&& loginForm.get('phone').touched){
-      <span class="invalid"> Phone Number is not vaild to your country  {{country.countryNameEn}}</span>
+      <span class="invalid"> Phone Number is not vaild to your country {{country.countryNameEn}}</span>
       }
       @if(loginForm.get('phone').hasError('required')&& loginForm.get('phone').touched){
       <span class="invalid"> Phone Number is required</span>
       }
       <div class="input">
-        <div class="country" (click)="pickCountry()">
+        <div class="country" (click)="pickCountry($event)">
           <img src="https://flagsapi.com/{{country.countryCode.toUpperCase()}}/flat/64.png" alt="">
           <span> +{{country.countryCallingCode}}</span>
           <ion-icon color="primary" name="chevron-down-outline"></ion-icon>

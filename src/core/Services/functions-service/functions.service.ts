@@ -6,7 +6,7 @@ import {
   AlertController,
   ModalController,
   NavController,
-  ToastController,AlertOptions
+  ToastController, AlertOptions
 } from "@ionic/angular";
 
 interface generalOptions {
@@ -94,12 +94,17 @@ export class FunctionsService {
   }
 
 
-  navForward(url: string) {
-    this.navCtrl.navigateForward(url)
+  async checkDarkThemes() {
+    const checkDarkOrLight = window.matchMedia('(prefers-color-scheme: dark)');
+    // activate dark if dark is the default
+    this.activateDarkThemes(checkDarkOrLight.matches)
+    // change themes by changing system themes
+    checkDarkOrLight.addEventListener(('change'), (media) => {
+      this.activateDarkThemes(media.matches)
+    })
   }
-
-  navBack(url: string) {
-    this.navCtrl.navigateBack(url)
+  activateDarkThemes(themeCase: boolean) {
+    document.body.classList.toggle('dark', themeCase)
   }
 
 

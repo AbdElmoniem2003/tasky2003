@@ -6,7 +6,7 @@ import { AuthService } from 'src/core/Services/auth-service/auth.service';
 import { FunctionsService } from 'src/core/Services/functions-service/functions.service';
 import { EndPointsEnum } from 'src/core/enums/end_points';
 import { DataService } from 'src/core/Services/data-service/data.service';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController, NavController, PopoverController } from '@ionic/angular';
 import { CountryComponent } from '../country/country.component';
 
 @Component({
@@ -54,13 +54,17 @@ export class LoginPage implements OnInit {
     })
   }
 
-  async pickCountry() {
+  async pickCountry(ev: any) {
     const modal = await this.modalCtrl.create({
+      
+      mode: 'ios',
       component: CountryComponent,
     })
+    modal.initialBreakpoint = 0.5
+    modal.breakpoints = [0, 0.25, 0.5, 0.75]
     await modal.present()
 
-    this.country = (await modal.onWillDismiss()).data
+    this.country = (await modal.onWillDismiss()).data || this.country
     // validate of previos and current country
     // this.loginForm.get('phone').setValue(null)
     // this.country.countryCode = (await modal.onWillDismiss()).data.countryCode

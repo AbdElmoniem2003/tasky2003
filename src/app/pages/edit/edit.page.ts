@@ -8,6 +8,7 @@ import { DataService } from 'src/core/Services/data-service/data.service';
 import { FunctionsService } from 'src/core/Services/functions-service/functions.service';
 import { NewTask } from 'src/core/types/task';
 import { TaskRes } from 'src/core/types/task-res';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-edit',
@@ -21,10 +22,20 @@ export class EditPage implements OnInit {
   priorities: string[] = ['low', 'medium', 'high']
   editForm: FormGroup;
   taskToEdit: TaskRes;
-  newTask: NewTask;
+  newTask: NewTask = {
+    image: '',
+    title: '',
+    desc: '',
+    priority: '',
+    dueDate: ''
+  }
   image: string = null;
   imgBlob: Blob;
   alternativeImg: string = '../../../assets/imgs/default.png';
+
+  imagesApi: string = environment.baseUrl + EndPointsEnum.IMAGES
+  taskDueDate: Date = new Date();
+
 
   constructor(
     private dataService: DataService,
@@ -35,20 +46,20 @@ export class EditPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.taskToEdit = this.dataService.getTask();
-    console.log(this.taskToEdit.image.length)
-    this.image = this.taskToEdit.image
     this.initForm()
   }
 
   initForm() {
+    this.taskToEdit = this.dataService.getTask();
     this.editForm = this.builder.group({
       "title": [this.taskToEdit.title, Validators.required],
       "desc": [this.taskToEdit.desc, Validators.required],
       "status": [this.taskToEdit.status, Validators.required],
       "priority": [this.taskToEdit.priority, Validators.required],
-      "dueDate": [this.taskToEdit.createdAt, Validators.required]
+      "dueDate": [this.taskDueDate, Validators.required]
     })
+    this.newTask.image = this.taskToEdit.image
+    this.image = this.imagesApi + this.taskToEdit.image
   }
 
 
@@ -57,64 +68,73 @@ export class EditPage implements OnInit {
     if (photo) {
       const blob = await this.cameraService.getImageBlob(photo);
       this.imgBlob = await this.cameraService.resizeImage(blob);
-      this.image = await this.cameraService.readImageBase64(this.imgBlob) as string;
+      this.image = await this.cameraService.readImageBase64(blob) as string;
     } else {
-      this.image = 'path.png'
+      this.image = null
       this.imgBlob = null
     }
   }
 
-
-
   updateTask() {
-    this.funcService.showLoading()
-    const formData = new FormData();
-
-    formData.append('image', this.imgBlob)
-    //upload image
-    this.imgBlob ? this.dataService.postData(EndPointsEnum.UPLOAD, formData) : null;
-
     // update Task
     this.newTask = this.editForm.value
-    this.newTask.image = this.image
+    this.funcService.showLoading()
+
+    //upload image
+    if (this.imgBlob) {
+      const formData = new FormData();
+      formData.append('image', this.imgBlob)
+      this.dataService.postData(EndPointsEnum.UPLOAD, formData).subscribe((res) => {
+        this.newTask.image = res.image;
+        console.log(this.newTask.image)
+        this.updateTaskData()
+      }, (error) => {
+        this.funcService.dismissLoading();
+        this.funcService.generalToast({ message: 'Image Size Too Large' })
+      })
+    } else {
+      this.newTask.image = (this.image) ? this.taskToEdit.image : 'path.png'
+      this.updateTaskData()
+    }
+  }
+
+  updateTaskData() {
     this.dataService.putData(EndPointsEnum.EDIT + this.taskToEdit._id, this.newTask)
       .subscribe(async (res: TaskRes) => {
         // await just to update the current task data before returning to tasks page
-        await this.saveOrRenameOrDelete(this.taskToEdit, this.newTask)
-        await this.dataService.updateStoredOne(res, this.taskToEdit._id);
+        // await this.saveOrRenameOrDelete(this.taskToEdit, this.newTask)
+        // await this.dataService.updateStoredOne(res, this.taskToEdit._id);
         this.funcService.dismissLoading()
         this.funcService.generalToast({ message: 'Task Updated Successfully', color: 'success' })
         this.navCtrl.navigateForward('/tasks')
       })
   }
 
-
-  async saveOrRenameOrDelete(oldTask: TaskRes, newTask: NewTask) {
-    if (oldTask.image) {
-      if (newTask.image) {
-        if (newTask.image == 'path.png') {
-          console.log('Old Deleted Only')
-          this.cameraService.deleteImage(oldTask)
-        }
-        else if (newTask.image !== oldTask.image) {
-          console.log('Old Deleted   &&   New Saved');
-          this.cameraService.saveImage(newTask);
-          this.cameraService.deleteImage(oldTask);
-        }
-        else if (oldTask.title !== newTask.title || oldTask.desc !== newTask.desc) {
-          console.log('Old Renamed Only');
-          await this.cameraService.renameImage(oldTask, newTask)
-        }
-      }
-    }
-    else {
-      if (newTask.image !== 'path.png' && newTask.image) {
-        console.log('No Old But New');
-        this.cameraService.saveImage(newTask);
-      }
-    }
-  }
-
+  // async saveOrRenameOrDelete(oldTask: TaskRes, newTask: NewTask) {
+  //   if (oldTask.image) {
+  //     if (newTask.image) {
+  //       if (newTask.image == 'path.png') {
+  //         console.log('Old Deleted Only')
+  //         this.cameraService.deleteImage(oldTask)
+  //       }
+  //       else if (newTask.image !== oldTask.image) {
+  //         console.log('Old Deleted   &&   New Saved');
+  //         this.cameraService.saveImage(newTask);
+  //         this.cameraService.deleteImage(oldTask);
+  //       }
+  //       else if (oldTask.title !== newTask.title || oldTask.desc !== newTask.desc) {
+  //         console.log('Old Renamed Only');
+  //         await this.cameraService.renameImage(oldTask, newTask)
+  //       }
+  //     }
+  //   }
+  //   else {
+  //     if (newTask.image !== 'path.png' && newTask.image) {
+  //       console.log('No Old But New');
+  //       this.cameraService.saveImage(newTask);
+  //     }
+  //   }
+  // }
 
 
 
@@ -125,9 +145,12 @@ export class EditPage implements OnInit {
 
 
 
-  pickDate() {
-    const dateInputEle: HTMLInputElement = document.querySelector('.pick-date');
-    dateInputEle.showPicker()
+
+  pickDate(ev: any) {
+    // const dateInputEle: HTMLInputElement = document.querySelector('.pick-date');
+    // dateInputEle.showPicker()
+
+
   }
 
   back() {

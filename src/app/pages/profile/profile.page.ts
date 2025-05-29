@@ -46,7 +46,6 @@ export class ProfilePage implements OnInit {
     Clipboard.write({ string: phone });
     this.funcService.generalToast({
       message: phone + " Copied Successfully",
-      color: 'success'
     })
   }
 

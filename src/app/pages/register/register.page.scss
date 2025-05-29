@@ -24,3 +24,11 @@
     }
   }
 }
+
+ion-input {
+
+  ion-icon {
+    --ion-color-primary:#{$ipColor};
+  }
+
+}

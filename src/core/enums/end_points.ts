@@ -1,6 +1,7 @@
 export enum EndPointsEnum {
   TODOS = 'todos?page=',
   UPLOAD = 'upload/image',
+  IMAGES = 'images/',
   LOGIN = 'auth/login',
   LOGOUT = 'auth/logout',
   REGISTER = 'auth/register',
@@ -9,7 +10,7 @@ export enum EndPointsEnum {
   DELETE = 'todos/',
   GET_ONE = 'todos/',
   CREATE = "todos",
-  EDIT='todos/',
+  EDIT = 'todos/',
 
   /* for Local Storage and Filesystem*/
   ACCESS = 'access_token',

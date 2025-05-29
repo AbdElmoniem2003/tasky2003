@@ -10,9 +10,18 @@
       <h3>Edit task</h3>
     </div>
 
+
     <div class="add-img ion-activitable">
-      <img [lazyLoad]="image" [defaultImage]="alternativeImg" alt="">
+      @if(image){
+      <img style="width: 100%;" [lazyLoad]="image" [defaultImage]="alternativeImg" alt="">
       <ion-icon (click)="updateImg()" name="create-outline" color='primary' slot="end"></ion-icon>
+      }@else {
+      <div (click)="updateImg()">
+        <img src="../../../assets/imgs/app_icons/add_img.png" alt="add-new-image">
+        <p>Add Img</p>
+        <ion-ripple-effect></ion-ripple-effect>
+      </div>
+      }
     </div>
 
     <form [formGroup]="editForm">
@@ -21,7 +30,7 @@
       <ion-input formControlName="title" placeholder="Enter title here..."></ion-input>
 
       <ion-label>Enter Description</ion-label>
-      <ion-input formControlName="desc" placeholder="Enter description here..."></ion-input>
+      <ion-textarea formControlName="desc" placeholder="Enter description here..."></ion-textarea>
 
       <ion-label>Priority</ion-label>
       <ion-select formControlName="priority" interface="action-sheet" toggleIcon="">
@@ -44,9 +53,15 @@
       </ion-select>
 
       <ion-label>Due date</ion-label>
-      <div (click)="pickDate()" class="input date">
+      <div (click)="pickDate($event)" class="input date" id="dueDatePicker">
         <p>{{(editForm.get('dueDate').value|date:'dd/MM/yyyy')||"choose due date..."}}</p>
-        <input formControlName="dueDate" type="date" class="pick-date">
+        <ion-popover #dueDatePicker trigger='dueDatePicker' size="auto" side="bottom" alignment="center" mode="ios">
+          <ng-template>
+            <ion-datetime formControlName="dueDate" [(ngModel)]="taskDueDate" showDefaultButtons="true"
+              doneText="Set Date" cancelText="Never mind" color="success">
+            </ion-datetime>
+          </ng-template>
+        </ion-popover>
         <img src="../../../assets/imgs/app_icons/calendar.png" alt="Due date">
       </div>
 

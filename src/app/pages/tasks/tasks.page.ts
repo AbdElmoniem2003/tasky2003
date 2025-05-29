@@ -6,6 +6,7 @@ import { CameraService } from 'src/core/Services/camera/camera.service';
 import { DataService } from 'src/core/Services/data-service/data.service';
 import { FunctionsService } from 'src/core/Services/functions-service/functions.service';
 import { TaskRes } from 'src/core/types/task-res';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-tasks',
@@ -18,12 +19,14 @@ export class TasksPage implements OnInit {
   tasks: TaskRes[];
   clonnedTasks: TaskRes[]
   statuses: string[] = ['all', 'inprogress', 'waiting', 'finished'];
+  filterStatus: string = 'all';
   alternateImg: string = '../../../assets/imgs/default.png'
-  filterTxt: string = 'all'
   skip: number = 1
   isLoading: boolean = false;
   isError: Boolean = false;
   empty: boolean = false
+
+  imagesApi: string = environment.baseUrl + EndPointsEnum.IMAGES
 
 
   constructor(
@@ -40,46 +43,45 @@ export class TasksPage implements OnInit {
 
   async ionViewWillEnter() {
     await this.loadTasks();
-    this.filterByStatus(this.filterTxt)
+    this.filterByStatus(this.filterStatus)
   }
 
   async loadTasks(ev?: any) {
-    this.cameraService.makeImagesDir()
-    const storedTasks = await this.dataService.getStoredData();
+    // this.cameraService.makeImagesDir()
+    // const storedTasks = await this.dataService.getStoredData();
 
-    if (storedTasks) {
-      storedTasks.forEach(async (t) => {
-        t.image = t.image == '' ? await this.cameraService.readImage(t) : ''
-      })
-      this.tasks = storedTasks;
-      this.clonnedTasks = storedTasks;
-      (this.tasks) ? this.showContent(ev) : this.showEmpty(ev);
+    // if (storedTasks) {
+      // storedTasks.forEach(async (t) => {
+      //   t.image = t.image == '' ? await this.cameraService.readImage(t) : ''
+      // })
+      // this.tasks = storedTasks;
+      // this.clonnedTasks = storedTasks;
+      // (this.tasks) ? this.showContent(ev) : this.showEmpty(ev);
 
-    } else {
+    // } else {}
       // from Api
       this.dataService.getData(EndPointsEnum.TODOS + (this.skip)).subscribe(async (res: TaskRes[]) => {
 
         // save memory on angular storage
-        res.forEach((t) => {
-          t.image != "path.png" ? this.cameraService.saveImage(t) : null;
-          t.image = t.image != "path.png" ? '' : t.image;
-        })
+        // res.forEach((t) => {
+        //   t.image != "path.png" ? this.cameraService.saveImage(t) : null;
+        //   t.image = t.image != "path.png" ? '' : t.image;
+        // })
         await this.dataService.storeData(res)
-        res.forEach(async (t) => {
-          t.image = t.image == '' ? await this.cameraService.readImage(t) : ''
-        })
+        // res.forEach(async (t) => {
+        //   t.image = t.image == '' ? await this.cameraService.readImage(t) : ''
+        // })
         this.tasks = res;
         this.clonnedTasks = res;
-
         (this.tasks) ? this.showContent(ev) : this.showEmpty(ev)
       });
-    }
+
   }
 
 
 
   filterByStatus(status: string) {
-    this.filterTxt = status
+    this.filterStatus = status
     this.tasks = this.clonnedTasks
     this.tasks = this.tasks.filter((t) => {
       if (status == 'all') return this.tasks;
@@ -120,7 +122,7 @@ export class TasksPage implements OnInit {
   refresh(event: RefresherCustomEvent) {
     this.isLoading = true;
     this.skip = 1
-    this.loadTasks(event).then(() => this.filterByStatus(this.filterTxt))
+    this.loadTasks(event).then(() => this.filterByStatus(this.filterStatus))
   }
 
 

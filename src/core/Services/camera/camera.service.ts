@@ -10,6 +10,7 @@ import { NewTask } from "src/core/types/task";
 
 const CAMERA = 'CAMERA'
 const PHOTOS = "PHOTOS"
+const RESET = "RESET"
 
 @Injectable({ providedIn: "root" })
 
@@ -43,7 +44,7 @@ export class CameraService {
       img ? opts.buttons.push({
         text: 'Reset',
         handler: () => {
-          resolve(null)
+          resolve(RESET)
         }
       }) : null
 
@@ -71,7 +72,7 @@ export class CameraService {
         opts.source = CameraSource.Photos;
         resolve(await Camera.getPhoto(opts))
       }
-      else if (source == null) {
+      else if (source == RESET) {
         resolve(null)
       }
     })

@@ -13,41 +13,46 @@
 }
 
 .filters {
+
   section {
-    color: #{$paragraphColor};
+    color: $paragraphColor;
     margin: 16px 0;
   }
 
-  .spans {
-    display: flex;
+  ion-segment {
     gap: 8px;
-    width: 100%;
+    display: flex;
+    height: fit-content;
 
-    span {
+    ion-segment-button {
       border-radius: 2 * $mainBorderRadius;
-      background-color: #{$secondColor};
-      color: #{$ipColor};
-      padding: 8px 12px;
+      background-color: $secondColor;
+      color: $ipColor;
       text-transform: capitalize;
       height: 36px;
-      position: relative;
-      overflow: hidden;
+      font-weight: 400;
+      padding: 0 12px;
+      overflow: hidden; // remove the Uline
+
+      // &[title='all'] {
+      //   width: 44px;
+      // }
+
+      // &[title='waiting'] {
+      //   width: 81px;
+      // }
+
+      // &[title='finished'] {
+      //   width: 88px;
+      // }
+
+      // &[title='inprogress'] {
+      //   width: 98px;
+      // }
     }
 
-    span.all {
-      width: 44px;
-    }
-
-    span.waiting {
-      width: 81px;
-    }
-
-    span.finished {
-      width: 88px;
-    }
-
-    span.active {
-      background-color: #{$mainColor};
+    ion-segment-button.segment-button-checked {
+      background-color: $mainColor;
       color: var(--ion-color-light);
     }
   }
@@ -142,7 +147,7 @@
             }
 
             ion-icon {
-              --ion-color-primary:#{$finishedColor};
+              --ion-color-primary: $finishedColor;
             }
           }
 
@@ -152,7 +157,7 @@
             }
 
             ion-icon {
-              --ion-color-primary:#{$inprogressColor};
+              --ion-color-primary: $inprogressColor;
             }
           }
 
@@ -162,7 +167,7 @@
             }
 
             ion-icon {
-              --ion-color-primary:#{$waitingColor};
+              --ion-color-primary: $waitingColor;
             }
           }
         }
@@ -203,7 +208,6 @@
     font-weight: 700;
     font-style: italic;
     width: 100%;
-    font-family: cursive;
     color: #{$mainColor};
     letter-spacing: 5px;
     position: fixed;
@@ -251,7 +255,15 @@
   }
 }
 
+ion-header {
+  padding: 22px 22px 10px;
+}
+
 ion-content {
+
+  .container {
+    padding-top: 0;
+  }
 
   >ion-buttons {
     position: fixed;

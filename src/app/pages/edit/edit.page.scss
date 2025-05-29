@@ -13,11 +13,20 @@
   position: relative;
   overflow: hidden;
 
+  >div {
+    display: flex;
+    padding: 10px;
+    gap: 8px;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+  }
+
   >p {
     padding: 12px 0;
   }
 
-  ion-icon{
+  ion-icon {
     position: absolute;
     font-size: 35px;
     box-shadow: inset 7px -7px 10px 0px white;

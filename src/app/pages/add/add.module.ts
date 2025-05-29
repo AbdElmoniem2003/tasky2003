@@ -12,9 +12,10 @@ import { AddPage } from './add.page';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     IonicModule,
     AddPageRoutingModule
   ],
   declarations: [AddPage]
 })
-export class AddPageModule {}
+export class AddPageModule { }

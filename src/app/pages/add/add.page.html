@@ -14,7 +14,7 @@
       <p>Add Img</p>
       <ion-ripple-effect></ion-ripple-effect>
       }@else {
-      <img [src]="image" alt="">
+      <img style="border-radius:inherit; width:100%;" [src]="image" alt="">
       }
     </div>
 
@@ -24,7 +24,7 @@
       <ion-input formControlName="title" placeholder="Enter title here..."></ion-input>
 
       <ion-label>Enter Description</ion-label>
-      <ion-input formControlName='desc' placeholder="Enter description here..."></ion-input>
+      <ion-textarea formControlName='desc' placeholder="Enter description here..."></ion-textarea>
 
       <ion-label>Priority</ion-label>
       <ion-select formControlName="priority" interface="action-sheet" toggleIcon="">
@@ -37,9 +37,15 @@
       </ion-select>
 
       <ion-label>Due date</ion-label>
-      <div (click)="pickDate()" class="input date">
-        <p>{{(addForm.get('dueDate').value|date:'dd/MM/yyyy')||"choose due date..."}}</p>
-        <input formControlName="dueDate" type="date" class="pick-date">
+      <div (click)="pickDate($event)" id="dueDatePicker" class="input date">
+        <p>{{(taskDueDate|date:'dd/MM/yyyy')||"choose due date..."}}</p>
+        <ion-popover #dueDatePicker trigger='dueDatePicker' size="auto" side="bottom" alignment="center" mode="ios">
+          <ng-template>
+            <ion-datetime formControlName="dueDate" [(ngModel)]="taskDueDate" showDefaultButtons="true"
+              doneText="Set Date" cancelText="Never mind" color="success">
+            </ion-datetime>
+          </ng-template>
+        </ion-popover>
         <img src="../../../assets/imgs/app_icons/calendar.png" alt="Due date">
       </div>
 
@@ -51,5 +57,6 @@
     </button>
 
   </div>
+
 
 </ion-content>

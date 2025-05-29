@@ -1,3 +1,27 @@
+<ion-header class="ion-no-border">
+  <div class="heading">
+    <h3>Logo</h3>
+    <ion-buttons slot='end'>
+      <ion-button (click)="toProfile()"><img src="../../../assets/imgs/app_icons/person.png" alt=""></ion-button>
+      <ion-button (click)="logout()"><img src="../../../assets/imgs/app_icons/logout.png" alt=""></ion-button>
+    </ion-buttons>
+  </div>
+
+  <div class="filters">
+    <section>My Tasks</section>
+    <ion-segment [scrollable]="true" [value]="filterStatus">
+      @for (status of statuses; track $index) {
+      <ion-segment-button (click)="filterByStatus(status)" [value]="status" [title]="status">
+        {{status}}<ion-ripple-effect></ion-ripple-effect>
+      </ion-segment-button>
+      }
+    </ion-segment>
+  </div>
+</ion-header>
+
+
+
+
 <ion-content>
 
   <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
@@ -9,26 +33,6 @@
   <div class="container">
 
 
-    <div class="heading">
-      <h3>Logo</h3>
-      <ion-buttons slot='end'>
-        <ion-button (click)="toProfile()"><img src="../../../assets/imgs/app_icons/person.png" alt=""></ion-button>
-        <ion-button (click)="logout()"><img src="../../../assets/imgs/app_icons/logout.png" alt=""></ion-button>
-      </ion-buttons>
-    </div>
-
-    <div class="filters">
-      <section>My Tasks</section>
-      <div class="spans">
-        @for (status of statuses; track $index) {
-        <span (click)="filterByStatus(status)" class="ion-activatable"
-          [ngClass]="status===filterTxt?'active '+ status : status">
-          {{status}}
-          <ion-ripple-effect></ion-ripple-effect>
-        </span>
-        }
-      </div>
-    </div>
 
 
     @if (tasks && !isLoading && !empty) {
@@ -37,7 +41,7 @@
       @for (task of tasks; track $index) {
 
       <div class="task" (click)="toDetails(task)">
-        <img [lazyLoad]="task.image" [defaultImage]="alternateImg" alt="No Image">
+        <img [src]="task.image!='path.png'?imagesApi+task.image: alternateImg" alt="No Image">
 
         <div class="task-data">
 

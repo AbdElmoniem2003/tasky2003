@@ -28,7 +28,8 @@
       "default",
       {
         "ignore": [
-          "scroll-behavior"
+          "scroll-behavior",
+          "height: fit-content"
         ]
       }
     ],
@@ -43,6 +44,7 @@
       {
         "image-alt": "off"
       }
-    ]
+    ],
+    "no-inline-styles": "off"
   }
 }

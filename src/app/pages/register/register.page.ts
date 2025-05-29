@@ -88,9 +88,11 @@ export class RegisterPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: CountryComponent,
     })
+    modal.initialBreakpoint = 0.5
+    modal.breakpoints = [0, 0.25, 0.5, 0.75]
     await modal.present()
 
-    this.country = (await modal.onWillDismiss()).data
+    this.country = (await modal.onWillDismiss()).data || this.country
     // validate of previos and current country
     // this.registerForm.get('phone').setValue(null)
     // this.country.countryCode = (await modal.onWillDismiss()).data.countryCode

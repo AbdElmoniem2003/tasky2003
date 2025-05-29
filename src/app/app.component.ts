@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { NavController } from '@ionic/angular';
 import { DataService } from 'src/core/Services/data-service/data.service';
+import { FunctionsService } from 'src/core/Services/functions-service/functions.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,8 @@ import { DataService } from 'src/core/Services/data-service/data.service';
 export class AppComponent implements OnInit {
   constructor(
     private navCtrl: NavController,
-    private dataService: DataService
+    private dataService: DataService,
+    private funcService: FunctionsService
   ) { }
 
   async ngOnInit() {
@@ -23,5 +25,7 @@ export class AppComponent implements OnInit {
     } else {
       this.navCtrl.navigateForward(isWeb ? '/login' : '/start')
     }
+
+    this.funcService.checkDarkThemes()
   }
 }

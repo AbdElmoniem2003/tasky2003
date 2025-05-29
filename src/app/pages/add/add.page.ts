@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Photo } from '@capacitor/camera';
-import { NavController } from '@ionic/angular';
+import { IonPopover, NavController } from '@ionic/angular';
 import { EndPointsEnum } from 'src/core/enums/end_points';
 import { CameraService } from 'src/core/Services/camera/camera.service';
 import { DataService } from 'src/core/Services/data-service/data.service';
@@ -17,12 +17,17 @@ import { TaskRes } from 'src/core/types/task-res';
 })
 export class AddPage implements OnInit {
 
+
+  @ViewChild('dueDatePicker') dueDatePicker: IonPopover;
+
   statuses: string[] = ['waiting', 'inprogress', 'finished']
   priorities: string[] = ['low', 'medium', 'high']
   addForm: FormGroup
-  task: NewTask
+  task: NewTask = null
+  taskDueDate: Date = new Date()
   image: string | ArrayBuffer;
   imgBlob: Blob;
+
 
   constructor(
     private dataService: DataService,
@@ -41,7 +46,7 @@ export class AddPage implements OnInit {
       "title": ['', [Validators.required]],
       "desc": ['', [Validators.required]],
       "priority": [this.priorities[1], [Validators.required]],
-      "dueDate": ['', [Validators.required]]
+      "dueDate": [this.taskDueDate, [Validators.required]]
     })
   }
 
@@ -60,30 +65,44 @@ export class AddPage implements OnInit {
 
 
   addTask() {
+    this.task = this.addForm.value
+    this.task.dueDate = new Date(this.taskDueDate).toDateString();
     this.funcService.showLoading()
     const formData = new FormData();
     formData.append('image', this.imgBlob)
     //upload image
-    this.imgBlob ? this.dataService.postData(EndPointsEnum.UPLOAD, formData) : null;
+    if (this.imgBlob) {
+      this.dataService.postData(EndPointsEnum.UPLOAD, formData).subscribe((res) => {
+        this.task.image = res.image;
+        this.uploadTask()
+      }, (err) => {
+        this.funcService.dismissLoading()
+        this.funcService.generalAlert({ message: 'Image Size Too Large " over 1Mb "' })
+      })
+    } else {
+      this.task.image = "path.png"
+      this.uploadTask()
+    }
+  }
 
-    this.task = this.addForm.value
-    this.task.image = this.image as string || "path.png"
+  uploadTask() {
     // add new Task
     this.dataService.postData(EndPointsEnum.TODOS, this.task)
       .subscribe(async (res: TaskRes) => {
         // await just to add and store the new task and its image before returnig to tasks page
-        res.image != 'path.png' ? await this.cameraService.saveImage(res) : null;
-        await this.dataService.storeAddedOne(res)
+        // res.image != 'path.png' ? await this.cameraService.saveImage(res) : null;
+        // await this.dataService.storeAddedOne(res)
         this.funcService.dismissLoading()
         this.funcService.generalToast({ message: 'Task Added Successfully', color: 'success' })
-        this.navCtrl.navigateForward('/tasks')
+        this.back()
       })
   }
 
 
-  pickDate() {
-    const dateInputEle: HTMLInputElement = document.querySelector('.pick-date');
-    dateInputEle.showPicker()
+  pickDate(ev: any) {
+    // const dateInputEle: HTMLInputElement = document.querySelector('.pick-date');
+    // dateInputEle.showPicker()
+    this.dueDatePicker.event = ev;
   }
 
   back() {

@@ -86,7 +86,7 @@ export class DataService {
 
   async storeAddedOne(task: TaskRes) {
     // return new Promise<TaskRes[]>(async (resolve, reject) => {
-    task.image = task.image != 'path.png' ? '' : task.image;
+    task.image = !task.image ? 'path.png' : task.image;
     const storedData = await this.getStoredData();
     storedData.push(task)
     // resolve(storedData)
@@ -96,7 +96,7 @@ export class DataService {
 
   async updateStoredOne(task: TaskRes, id: string) {
     // return new Promise<TaskRes[]>(async (resolve, reject) => {
-    task.image = task.image != 'path.png' ? '' : task.image;
+    // task.image = task.image != 'path.png' ? '' : task.image;
     const storedData = await this.getStoredData();
     const toUpdate = storedData.find(t => { return t._id == id })
     const toUpdateIndex = storedData.indexOf(toUpdate);
