@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CountryData } from 'country-codes-list';
 import { AuthService } from 'src/core/Services/auth-service/auth.service';
 
@@ -8,6 +8,7 @@ import { EndPointsEnum } from 'src/core/enums/end_points';
 import { DataService } from 'src/core/Services/data-service/data.service';
 import { ModalController, NavController, PopoverController } from '@ionic/angular';
 import { CountryComponent } from '../country/country.component';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +39,9 @@ export class LoginPage implements OnInit {
 
   initLoginForm() {
     this.loginForm = this.form.group({
-      phone: [null, [Validators.required, this.authService.validatePhoneNumber(this.country.countryCode)]],
+      phone: ['', [Validators.required, (control: AbstractControl) => {
+        return this.authService.validatePhoneNumber(control.value, this.country.countryCode);
+      }]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     })
   }
@@ -49,14 +52,11 @@ export class LoginPage implements OnInit {
       this.authService.storeRefreshToken(res.refresh_token)
       localStorage.setItem(EndPointsEnum.ACCESS, res.access_token)
       this.navCtrl.navigateForward('/tasks')
-    }, err => {
-      this.funcService.generalToast({ message: err.error.message, color: 'danger' })
     })
   }
 
   async pickCountry(ev: any) {
     const modal = await this.modalCtrl.create({
-      
       mode: 'ios',
       component: CountryComponent,
     })
@@ -65,12 +65,11 @@ export class LoginPage implements OnInit {
     await modal.present()
 
     this.country = (await modal.onWillDismiss()).data || this.country
-    // validate of previos and current country
-    // this.loginForm.get('phone').setValue(null)
-    // this.country.countryCode = (await modal.onWillDismiss()).data.countryCode
-    this.initLoginForm()
+    this.authService.checkAfterPickCountry(this.loginForm, this.country)
 
   }
+
+
 
 
   toRegister() {

@@ -3,6 +3,7 @@ import { Capacitor } from '@capacitor/core';
 import { NavController } from '@ionic/angular';
 import { DataService } from 'src/core/Services/data-service/data.service';
 import { FunctionsService } from 'src/core/Services/functions-service/functions.service';
+import { SplashScreen } from "@capacitor/splash-screen"
 
 @Component({
   selector: 'app-root',
@@ -27,5 +28,6 @@ export class AppComponent implements OnInit {
     }
 
     this.funcService.checkDarkThemes()
+    SplashScreen.hide()
   }
 }

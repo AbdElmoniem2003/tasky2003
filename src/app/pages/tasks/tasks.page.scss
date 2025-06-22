@@ -1,3 +1,4 @@
+@import "../../../theme/variables.scss";
 @import "../../../theme/mixins.scss";
 @import "../../../global.scss";
 
@@ -22,38 +23,41 @@
   ion-segment {
     gap: 8px;
     display: flex;
-    height: fit-content;
+    justify-content: space-around;
 
     ion-segment-button {
       border-radius: 2 * $mainBorderRadius;
       background-color: $secondColor;
       color: $ipColor;
       text-transform: capitalize;
-      height: 36px;
+      min-height: 36px !important;
       font-weight: 400;
-      padding: 0 12px;
-      overflow: hidden; // remove the Uline
+      display: flex;
+      flex-flow: row;
+      justify-content: center;
 
-      // &[title='all'] {
-      //   width: 44px;
-      // }
+      &[title='all'] {
+        width: 44px;
+      }
 
-      // &[title='waiting'] {
-      //   width: 81px;
-      // }
+      &[title='waiting'] {
+        width: 81px;
+      }
 
-      // &[title='finished'] {
-      //   width: 88px;
-      // }
+      &[title='finished'] {
+        width: 88px;
+      }
 
-      // &[title='inprogress'] {
-      //   width: 98px;
-      // }
+      &[title='inprogress'] {
+        width: 98px;
+      }
     }
 
     ion-segment-button.segment-button-checked {
       background-color: $mainColor;
-      color: var(--ion-color-light);
+      color: white;
+      --indicator-color: transparent !important; // removes the under line
+      --indicator-color-checked: transparent !important;
     }
   }
 }
@@ -68,6 +72,7 @@
     gap: 12px;
     padding: 12px 0;
     align-items: center;
+    justify-content: space-between;
     height: 96px;
 
     img {
@@ -83,11 +88,14 @@
       @include shape(219px, 72px);
 
       >div {
+        height: 24px;
         display: flex;
         justify-content: space-between;
       }
 
       >div:first-of-type {
+        height: 22px;
+
         p {
           font-size: 16px;
           line-height: 24px;
@@ -127,11 +135,22 @@
         font-size: 14px;
         line-height: 24px;
         white-space: nowrap;
+        color: $paragraphColor;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
       >div:last-of-type {
+        height: 18px;
+
+        p {
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 18px;
+          color:#{$paragraphColor};
+          text-transform: capitalize;
+        }
+
         >div {
           display: flex;
           gap: 4px;
@@ -143,44 +162,34 @@
           // priorities
           &[title='low'] {
             p {
-              color: $finishedColor;
+              color: #{$finishedColor};
             }
 
             ion-icon {
-              --ion-color-primary: $finishedColor;
+              --ion-color-primary: #{$finishedColor};
             }
           }
 
-          &[title='midium'] {
+          &[title='medium'] {
             p {
-              color: $inprogressColor;
+              color: #{$inprogressColor};
             }
 
             ion-icon {
-              --ion-color-primary: $inprogressColor;
+              --ion-color-primary: #{$inprogressColor};
             }
           }
 
           &[title='high'] {
             p {
-              color: $waitingColor;
+              color: #{$waitingColor};
             }
 
             ion-icon {
-              --ion-color-primary: $waitingColor;
+              --ion-color-primary: #{$waitingColor};
             }
           }
         }
-
-        p {
-          font-weight: 500;
-          font-size: 12px;
-          line-height: 18px;
-          color:#{$paragraphColor};
-          text-transform: capitalize;
-        }
-
-
       }
     }
 

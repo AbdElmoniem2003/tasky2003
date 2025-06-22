@@ -62,7 +62,7 @@ export class DataService {
   }
 
   handleDataErrors(err) {
-    this.funcService.generalToast({ message: err.error.message, color: 'danger' })
+    this.funcService.generalToast({ message: err.error.message, color: 'secondary' })
   }
 
 

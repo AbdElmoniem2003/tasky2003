@@ -24,7 +24,7 @@ export class AddPage implements OnInit {
   priorities: string[] = ['low', 'medium', 'high']
   addForm: FormGroup
   task: NewTask = null
-  taskDueDate: Date = new Date()
+  taskDueDate: Date = null
   image: string | ArrayBuffer;
   imgBlob: Blob;
 
@@ -89,9 +89,6 @@ export class AddPage implements OnInit {
     // add new Task
     this.dataService.postData(EndPointsEnum.TODOS, this.task)
       .subscribe(async (res: TaskRes) => {
-        // await just to add and store the new task and its image before returnig to tasks page
-        // res.image != 'path.png' ? await this.cameraService.saveImage(res) : null;
-        // await this.dataService.storeAddedOne(res)
         this.funcService.dismissLoading()
         this.funcService.generalToast({ message: 'Task Added Successfully', color: 'success' })
         this.back()
@@ -100,8 +97,6 @@ export class AddPage implements OnInit {
 
 
   pickDate(ev: any) {
-    // const dateInputEle: HTMLInputElement = document.querySelector('.pick-date');
-    // dateInputEle.showPicker()
     this.dueDatePicker.event = ev;
   }
 

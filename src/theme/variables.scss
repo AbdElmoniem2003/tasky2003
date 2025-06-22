@@ -53,7 +53,7 @@
   --ion-color-danger-contrast: #ffffff;
   --ion-color-danger-contrast-rgb: 255, 255, 255;
   --ion-color-danger-shade: #cf3c4f;
-  --ion-color-danger-tint: #ed576b;
+  --ion-color-danger-tint: #f05400;
   /** dark **/
   --ion-color-dark: #222428;
   --ion-color-dark-rgb: 34, 36, 40;
@@ -75,7 +75,33 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+
+
+  // Custom Variables
+  //  ===================
+  --mainColor: rgba(95, 51, 225, 1);
+  --secondColor: rgba(240, 236, 255, 1);
+  --txtColor: rgba(110, 106, 124, 1);
+  --mainBorderRadius: 12px;
+  --mainBorderColor: rgba(186, 186, 186, 1);
+  --ipColor: rgba(127, 127, 127, 1);
+  --paragraphColor: rgba(36, 37, 44, 0.6);
+
+  --waitingColor: rgba(255, 125, 83, 1);
+  --waitingBG: rgba(255, 228, 242, 1);
+  --finishedColor: rgba(0, 135, 255, 1);
+  --finishedBG: rgba(227, 242, 255, 1);
+  --inprogressColor: var(--mainColor);
+  --inprogressBG: var(--secondColor);
+
+  --profileTxt: rgba(47, 47, 47, 0.4);
+  --profileHeading: rgba(47, 47, 47, 0.6);
+  --profileBg: rgba(245, 245, 245);
+
+
 }
+
 
 body.dark {
   --ion-color-primary: #428cff;
@@ -126,12 +152,36 @@ body.dark {
   --ion-color-medium-contrast-rgb: 0, 0, 0;
   --ion-color-medium-shade: #86888f;
   --ion-color-medium-tint: #a2a4ab;
-  --ion-color-light: #222428;
+  --ion-color-light: #ffffff;
   --ion-color-light-rgb: 34, 36, 40;
   --ion-color-light-contrast: #ffffff;
   --ion-color-light-contrast-rgb: 255, 255, 255;
   --ion-color-light-shade: #1e2023;
   --ion-color-light-tint: #383a3e;
+
+
+  // Custom Dark Theme
+  --mainColor: rgb(0, 246, 189);
+  --secondColor: rgba(100, 100, 255, 0.6);
+  --txtColor: rgba(255, 255, 255, 0.75);
+  --mainBorderRadius: 12px;
+  --mainBorderColor: rgba(186, 186, 186, 1);
+  --ipColor: rgba(201, 201, 201);
+  --paragraphColor: rgba(192, 194, 201, 0.6);
+
+  --waitingColor: #FFC107;
+  --waitingBG: rgb(240 245 187);
+  --finishedColor: rgba(0, 135, 255, 1);
+  --finishedBG: rgb(199 222 243);
+  --inprogressColor: var(--mainColor);
+  --inprogressBG: var(--secondColor);
+
+  --profileTxt: rgb(0 196 246);
+  --profileHeading: rgb(0 150 255);
+  --profileBg: rgb(0 144 195 / 50%);
+  // //  =========================
+  --ion-color-light: #0c3358 !important;
+  --ion-background-color: #0b3f72 !important;
 }
 
 .ios body.dark {
@@ -200,31 +250,3 @@ body.dark {
 }
 
 /*# sourceMappingURL=variables.css.map */
-
-
-.md body.dark,
-.ios body.dark {
-
-  $mainColor: rgb(51, 208, 225) !important;
-  $secondColor: rgba(240, 236, 255, 1);
-  $txtColor: rgba(110, 106, 124, 1);
-  $mainBorderRadius: 12px;
-  $mainBorderColor: rgba(186, 186, 186, 1);
-  $ipColor: rgba(127, 127, 127, 1);
-  $paragraphColor: rgba(36, 37, 44, 0.6);
-
-  $waitingColor: rgba(255, 125, 83, 1);
-  $waitingBG: rgba(255, 228, 242, 1);
-  $finishedColor: rgba(0, 135, 255, 1);
-  $finishedBG: rgba(227, 242, 255, 1);
-  $inprogressColor: $mainColor;
-  $inprogressBG: $secondColor;
-
-  $profileTxt: rgba(47, 47, 47, 0.4);
-  $profileHeading: rgba(47, 47, 47, 0.6);
-  $profileBg: rgba(245, 245, 245);
-
-  --ion-color-light: #0c3358 !important;
-  --ion-background-color: #0b3f72 !important;
-
-}

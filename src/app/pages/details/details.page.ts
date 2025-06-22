@@ -111,9 +111,7 @@ export class DetailsPage implements OnInit, AfterViewInit {
         }]
     }
     pdfMake.createPdf(docDefinition).open();
-    // window.print()
     this.editsPopOver.dismiss()
-
   }
 
 
@@ -121,7 +119,6 @@ export class DetailsPage implements OnInit, AfterViewInit {
     const uri = (await this.cameraService.getImageUri(this.task)).uri;
     this.funcService.share({ text: 'Share Task ' + this.task.title, uri: uri })
     this.editsPopOver.dismiss()
-
   }
 
 

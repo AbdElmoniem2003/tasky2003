@@ -17,7 +17,6 @@ import { environment } from 'src/environments/environment';
 export class TasksPage implements OnInit {
 
   tasks: TaskRes[];
-  clonnedTasks: TaskRes[]
   statuses: string[] = ['all', 'inprogress', 'waiting', 'finished'];
   filterStatus: string = 'all';
   alternateImg: string = '../../../assets/imgs/default.png'
@@ -42,57 +41,33 @@ export class TasksPage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    await this.loadTasks();
-    this.filterByStatus(this.filterStatus)
-  }
-
-  async loadTasks(ev?: any) {
-    // this.cameraService.makeImagesDir()
-    // const storedTasks = await this.dataService.getStoredData();
-
-    // if (storedTasks) {
-      // storedTasks.forEach(async (t) => {
-      //   t.image = t.image == '' ? await this.cameraService.readImage(t) : ''
-      // })
-      // this.tasks = storedTasks;
-      // this.clonnedTasks = storedTasks;
-      // (this.tasks) ? this.showContent(ev) : this.showEmpty(ev);
-
-    // } else {}
-      // from Api
-      this.dataService.getData(EndPointsEnum.TODOS + (this.skip)).subscribe(async (res: TaskRes[]) => {
-
-        // save memory on angular storage
-        // res.forEach((t) => {
-        //   t.image != "path.png" ? this.cameraService.saveImage(t) : null;
-        //   t.image = t.image != "path.png" ? '' : t.image;
-        // })
-        await this.dataService.storeData(res)
-        // res.forEach(async (t) => {
-        //   t.image = t.image == '' ? await this.cameraService.readImage(t) : ''
-        // })
-        this.tasks = res;
-        this.clonnedTasks = res;
-        (this.tasks) ? this.showContent(ev) : this.showEmpty(ev)
-      });
-
+    this.loadTasks()
+    // this.tasks = await this.filterByStatus(this.filterStatus)
   }
 
 
+  loadTasks(ev?: any) {
 
-  filterByStatus(status: string) {
+    // from Api
+    this.dataService.getData(EndPointsEnum.TODOS + (this.skip)).subscribe(async (res: TaskRes[]) => {
+      this.dataService.storeData(res);
+      // handle refreshing when tasks are already filtered
+      this.tasks = (this.filterStatus == 'all') ? res : await this.filterByStatus(this.filterStatus);
+      (this.tasks) ? this.showContent(ev) : this.showEmpty(ev)
+    });
+
+  }
+
+  async filterByStatus(status: string) {
     this.filterStatus = status
-    this.tasks = this.clonnedTasks
+    this.tasks = await this.dataService.getStoredData()
     this.tasks = this.tasks.filter((t) => {
       if (status == 'all') return this.tasks;
       return status == t.status
     })
-    this.empty = this.tasks.length ? false : true
+    this.empty = this.tasks.length ? false : true;
+    return this.tasks
   }
-
-
-
-
 
 
 
@@ -118,13 +93,11 @@ export class TasksPage implements OnInit {
     ev?.target.complete()
   }
 
-
   refresh(event: RefresherCustomEvent) {
     this.isLoading = true;
     this.skip = 1
-    this.loadTasks(event).then(() => this.filterByStatus(this.filterStatus))
+    this.loadTasks(event)
   }
-
 
   toProfile() {
     this.navCtrl.navigateForward('/profile')
@@ -145,13 +118,9 @@ export class TasksPage implements OnInit {
       btns: { ok: 'Ok 👍', no: 'No 👎' }
     }).then(agreed => {
       if (!agreed) return;
-      this.dataService.clearStorage()
       this.authService.logOut();
       this.navCtrl.navigateBack('/login')
     })
   }
-
-
-
 
 }

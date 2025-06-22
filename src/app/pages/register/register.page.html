@@ -12,10 +12,11 @@
       }
       <ion-input formControlName="displayName" placeholder="Name..."></ion-input>
 
-      @if(registerForm.get('phone').hasError('invalidPhoneNumber')&& registerForm.get('phone').touched){
-      <span class="invalid"> Phone Number is not vaild to your country {{country.countryNameEn}}</span>
+      @if(registerForm.get('phone').hasError('invalidPhone')&& registerForm.get('phone').touched){
+      <span class="invalid"> Phone Number is not vaild to your
+        country"<strong>{{country.countryNameEn}}</strong>"</span>
       }
-      @if(registerForm.get('phone').hasError('required')&& registerForm.get('phone').touched){
+      @if(registerForm.get('phone').hasError('required') && registerForm.get('phone').touched){
       <span class="invalid"> Phone Number is required</span>
       }
       <div class="input">
@@ -24,7 +25,7 @@
           <span> +{{country.countryCallingCode}}</span>
           <ion-icon color="primary" name="chevron-down-outline"></ion-icon>
         </div>
-        <ion-input formControlName="phone" class="inner-input" type="text" placeholder="123 456-7890">
+        <ion-input formControlName="phone" class="inner-input" type="string" placeholder="123 456-7890">
         </ion-input>
       </div>
 
@@ -50,7 +51,8 @@
       @if(registerForm.get('password').hasError('required')&& registerForm.get('password').touched){
       <span class="invalid"> Password is required of 6 characters at least</span>
       }
-      <ion-input formControlName="password" [type]="displayPassword?'text':'password'" placeholder="Password...">
+      <ion-input (keyup.enter)="register()" formControlName="password" [type]="displayPassword?'text':'password'"
+        placeholder="Password...">
 
         <ion-icon slot='end' color="primary" (click)="displayPassword=!displayPassword"
           [name]="!displayPassword?'eye-outline':'eye-off-outline'"></ion-icon>

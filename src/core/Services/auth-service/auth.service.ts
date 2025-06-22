@@ -10,16 +10,15 @@ import { profileRes } from "src/core/types/profile-res";
 import { CountryData } from "country-codes-list";
 import countriesData from "country-codes-list/dist/countriesData.js"
 
-import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
 
-import * as libphonenumber from "google-libphonenumber";
+import { FormGroup } from "@angular/forms";
+
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 
 @Injectable({ providedIn: 'root' })
 
 export class AuthService {
-
-  phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
 
   countries: CountryData[] = countriesData
   country: CountryData = countriesData.find(c => { return c.countryNameEn.toLowerCase() == 'egypt' })
@@ -62,10 +61,10 @@ export class AuthService {
   async logOut(): Promise<any> {
     return new Promise(async (resolve, reject) => {
       const token = await this.getRefreshToken()
-      return this.dataService.postData(EndPointsEnum.LOGOUT, { token: token })
+      this.dataService.postData(EndPointsEnum.LOGOUT, { token: token })
         .subscribe((res: { success: true }) => {
-          // this.functionsService
-          resolve(res.success)
+          resolve(res.success);
+          this.dataService.clearStorage()
         }, err => reject(err))
     })
   }
@@ -115,28 +114,16 @@ export class AuthService {
 
 
 
+  validatePhoneNumber(phoneNumber: string, countryCode: string | any) {
+    const phone = parsePhoneNumberFromString(phoneNumber, countryCode);
+    const valid = phone ? phone.isValid() : false;
+    return valid ? null : { invalidPhone: true };
+  }
 
-
-
-
-
-  validatePhoneNumber(regionCode: string): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const phoneNumber = control.value;
-      if (!phoneNumber) {
-        return { required: true };
-      }
-      try {
-        const parsedNumber = this.phoneUtil.parseAndKeepRawInput(phoneNumber, regionCode);
-        if (this.phoneUtil.isValidNumber(parsedNumber)) {
-          return null; // Valid phone number
-        }
-      } catch (error) {
-        return { invalidPhoneNumber: true }; // Invalid phone number
-      }
-
-      return { invalidPhoneNumber: true };
-    };
+  checkAfterPickCountry(form: FormGroup, country: CountryData) {
+    const valid = this.validatePhoneNumber(form.get('phone').value, country.countryCode);
+    valid?.invalidPhone ? form.get('phone')?.setErrors(valid) :
+      form.get('phone').setErrors({ invalidPhone: false })
   }
 
 

@@ -52,33 +52,37 @@ html {
 
 @import "./theme/mixins.scss";
 
-$mainColor: rgba(95, 51, 225, 1);
-$secondColor: rgba(240, 236, 255, 1);
-$txtColor: rgba(110, 106, 124, 1);
+
+
+
+
+$mainColor: var(--mainColor);
+$secondColor: var(--secondColor);
+$txtColor: var(--txtColor);
+$mainBorderColor: var(--mainBorderColor);
+$ipColor: var(--ipColor);
+// $paragraphColor: #cde1ed;
+$paragraphColor: var(--paragraphColor);
 $mainBorderRadius: 12px;
-$mainBorderColor: rgba(186, 186, 186, 1);
-$ipColor: rgba(127, 127, 127, 1);
-$paragraphColor: rgba(36, 37, 44, 0.6);
 
-$waitingColor: rgba(255, 125, 83, 1);
-$waitingBG: rgba(255, 228, 242, 1);
-$finishedColor: rgba(0, 135, 255, 1);
-$finishedBG: rgba(227, 242, 255, 1);
-$inprogressColor: $mainColor;
-$inprogressBG: $secondColor;
+$waitingColor: var(--waitingColor);
+$waitingBG: var(--waitingBG);
+$finishedColor: var(--finishedColor);
+$finishedBG: var(--finishedBG);
+$inprogressColor: #{$mainColor};
+$inprogressBG: #{$secondColor};
 
-$profileTxt: rgba(47, 47, 47, 0.4);
-$profileHeading: rgba(47, 47, 47, 0.6);
-$profileBg: rgba(245, 245, 245);
+$profileTxt: var(--profileTxt);
+$profileHeading: var(--profileHeading);
+$profileBg: var(--profileBg);
+
+
 
 body.dark {
-
-  $mainColor: var(--ion-color-light);
-
   .heading {
 
     img {
-      box-shadow: 0px 0px 10px 2px white;
+      box-shadow: inset 0px 0px 10px 2px white;
       border-radius: 5px;
     }
   }
@@ -140,8 +144,8 @@ button.auth {
   width: 100%;
   height: 50px;
   border-radius: 12px;
-  background-color: $mainColor;
-  color: var(--ion-color-light);
+  background-color: #{$mainColor};
+  color: white;
 
   // for ion-ripple-effect
   position: relative;
@@ -160,8 +164,8 @@ button.auth {
 ion-input:not(.inner-input),
 ion-select, ion-textarea,
 form>input {
-  border: 1px solid $mainBorderColor;
-  border-radius: $mainBorderRadius;
+  border: 1px solid #{$mainBorderColor};
+  border-radius: #{$mainBorderRadius};
   height: 50px;
   gap: 12px;
   padding: 0 15px !important;
@@ -232,13 +236,13 @@ footer {
   text-align: center;
 
   p {
-    color: $txtColor;
+    color: #{$txtColor};
     line-height: 20px;
     font-size: 14px;
     font-weight: 400;
 
     span {
-      color: $mainColor;
+      color: #{$mainColor};
       font-weight: 600;
       text-decoration: underline;
     }

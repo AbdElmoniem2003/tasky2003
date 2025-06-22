@@ -1,5 +1,6 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 import { KeyboardResize } from '@capacitor/keyboard';
+import { StatusBar } from '@capacitor/status-bar';
 
 const config: CapacitorConfig = {
   appId: 'com.tasky2003.example',
@@ -7,13 +8,16 @@ const config: CapacitorConfig = {
   webDir: 'www',
   plugins: {
     Keyboard: {
-      resize: KeyboardResize.Ionic
+      resize: KeyboardResize.Body,
+      resizeOnFullScreen: true,
+
     },
-    "SplashScreen": {
-      "launchAutoHide": false,
-    }, "StatusBar": {
-      "overlaysWebView": true,
-      "style": 'Dark',
+    SplashScreen: {
+      launchAutoHide: false,
+      androidScaleType: 'FIT_XY'
+    }, StatusBar: {
+      // "overlaysWebView": true,
+      style: 'DEFAULT',
     }
   },
 };

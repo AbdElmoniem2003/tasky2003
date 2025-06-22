@@ -28,7 +28,7 @@ export class CameraService {
 
       const opts: ActionSheetOptions = {
         mode: 'ios',
-        header: 'Choose the miage Source',
+        header: 'Choose the Image Source',
         buttons: [{
           text: 'camera',
           handler: () => resolve(CAMERA)

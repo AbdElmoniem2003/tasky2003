@@ -1,6 +1,7 @@
 @import "../../../theme/mixins.scss";
 @import "../../../global.scss";
 
+
 .heading {
   position: relative;
 
@@ -12,15 +13,27 @@
 
 ion-popover {
   --width: 82px;
-  --height: 98px;
-  --background: transparent;
+  --height: 88px;
+  --offset-x: -9px;
+  --background: var(--ion-color-light);
+  --backdrop-opacity: 0;
+  --box-shadow: 0px 0px 20px 0px #80808075;
+
+  &::part(arrow) {
+    left: calc(100% - 42px) !important;
+  }
 
   ion-list {
     border-radius: #{$mainBorderRadius};
+    background-color: var(--ion-color-light);
 
     ion-item {
       &:first-of-type {
         width: 80%;
+
+        button {
+          color: var(--ion-color-dark);
+        }
       }
 
       button {
@@ -40,39 +53,6 @@ ion-popover {
   }
 }
 
-// .edits {
-//   position: absolute;
-//   top: 11.5%;
-//   z-index: 2;
-//   width: 88px;
-//   right: 3%;
-//   display: flex;
-//   flex-flow: column;
-//   border-radius: 12px;
-//   padding: 8px 16px;
-//   --ion-color-light: white;
-//   background: var(--ion-color-light);
-//   box-shadow: 0px 0px 5px 0px gray;
-
-//   >button {
-//     position: relative;
-//     overflow: hidden;
-//     background: transparent;
-//     padding: 12px 0;
-//     width: 50px;
-//     text-align: start;
-//   }
-
-//   >button:last-child {
-//     color: #{$waitingColor};
-//   }
-
-//   >button:not(:last-of-type) {
-//     border-bottom: 1px solid rgba(0, 0, 0, 0.24);
-//   }
-
-// }
-
 .task-img {
   display: flex;
   justify-content: center;
@@ -88,7 +68,7 @@ ion-popover {
   display: flex;
   flex-flow: column;
   gap: 8px;
-  margin-bottom: 16px;
+  padding: 16px 0;
 
   h3 {
     font-size: 24px;
@@ -163,14 +143,5 @@ ion-popover {
 qrcode {
   display: flex;
   justify-content: center;
-
-}
-
-.hide-edits {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgb(0, 0, 0, 0.2);
+  margin-top: 16px;
 }

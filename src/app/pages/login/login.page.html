@@ -6,8 +6,9 @@
     <h3>Login</h3>
     <form [formGroup]="loginForm">
 
-      @if(loginForm.get('phone').hasError('invalidPhoneNumber')&& loginForm.get('phone').touched){
-      <span class="invalid"> Phone Number is not vaild to your country {{country.countryNameEn}}</span>
+      @if(loginForm.get('phone').hasError('invalidPhone')&& loginForm.get('phone').touched){
+      <span class="invalid"> Phone Number is not vaild to your country
+        "<strong>{{country.countryNameEn}}</strong>"</span>
       }
       @if(loginForm.get('phone').hasError('required')&& loginForm.get('phone').touched){
       <span class="invalid"> Phone Number is required</span>
@@ -19,7 +20,7 @@
           <ion-icon color="primary" name="chevron-down-outline"></ion-icon>
         </div>
 
-        <ion-input formControlName="phone" class="inner-input" type="text" placeholder="123 456-7890">
+        <ion-input formControlName="phone" class="inner-input" type="string" placeholder="123 456-7890">
         </ion-input>
       </div>
 
@@ -27,7 +28,7 @@
       <span class="invalid"> Password is required of 6 characters at least</span>
       }
 
-      <ion-input formControlName="password" (key.enter)="login()" [type]="displayPassword?'text':'password'"
+      <ion-input formControlName="password" (keyup.enter)="login()" [type]="displayPassword?'text':'password'"
         placeholder="Password...">
 
         <ion-icon slot='end' color="primary" (click)="displayPassword=!displayPassword"

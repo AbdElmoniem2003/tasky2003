@@ -5,14 +5,15 @@
 
 
   <div class="container details" #content>
-    <ion-popover trigger="editBtns" size="auto" side="bottom" #editsPopOver mode="ios">
+    <ion-popover trigger="editBtns" alignment="center" side="bottom" #editsPopOver mode="ios">
       <ng-template>
         <ion-list>
-          <ion-item>
-            <button (click)="toEdits()" class="ion-activatable"> Edit <ion-ripple-effect></ion-ripple-effect></button>
+          <ion-item color="light">
+            <button (click)="toEdits()" class="ion-activatable"> Edit
+              <ion-ripple-effect></ion-ripple-effect></button>
           </ion-item>
 
-          <ion-item lines="none">
+          <ion-item lines="none" color="light">
             <button (click)="deleteTask()" class="ion-activatable">Delete
               <ion-ripple-effect></ion-ripple-effect></button>
           </ion-item>
@@ -24,6 +25,7 @@
           <!-- <ion-item>
             <button (click)="printTask()" class="ion-activatable">Print <ion-ripple-effect></ion-ripple-effect></button>
           </ion-item> -->
+
         </ion-list>
       </ng-template>
     </ion-popover>

@@ -94,7 +94,7 @@ export class FunctionsService {
   }
 
 
-  async checkDarkThemes() {
+  checkDarkThemes() {
     const checkDarkOrLight = window.matchMedia('(prefers-color-scheme: dark)');
     // activate dark if dark is the default
     this.activateDarkThemes(checkDarkOrLight.matches)
